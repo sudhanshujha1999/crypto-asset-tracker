@@ -1,54 +1,72 @@
-# React + TypeScript + Vite
+# 🧠 Crypto Asset Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive, lightweight crypto performance tracker built with React, Zustand, Recharts, and wagmi.  
+This application allows users to track and compare the historical performance of selected cryptocurrencies using live data from CoinGecko.
 
-Currently, two official plugins are available:
+## 🌐 Live Preview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+https://crypto-asset-tacker.netlify.app/
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ✨ Features
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+- **🔍 Asset Selection**  
+  Search and select crypto assets (e.g., BTC, ETH, SOL) using a multi-select dropdown with persistent selection.
+
+- **📈 Performance Charting**  
+  View historical price data with toggles for Week, Month, and Year intervals. Built with Recharts for smooth, interactive visuals.
+
+- **📊 Multi-Asset Comparison**  
+  Compare up to two crypto assets side by side in the same chart with color-coded trend lines.
+
+- **⚡ Local Caching**  
+  Asset data is cached in localStorage for improved performance and reduced API calls.
+
+- **🦊 MetaMask Integration**  
+  Self-custody wallet support using wagmi v2 + viem. Users can connect MetaMask for future wallet-based asset insights.
+
+- **🧪 Unit-Test Ready**  
+  Core logic components can be tested using Vitest and React Testing Library.
+
+---
+
+## 🛠 Tech Stack
+
+| Tool        | Purpose                                |
+|-------------|----------------------------------------|
+| **React + TypeScript** | Frontend framework + types  |
+| **Vite**    | Lightning-fast bundler                 |
+| **Tailwind CSS (v4)** | Utility-first styling        |
+| **ShadCN UI** | Reusable, accessible UI primitives   |
+| **Zustand** | Minimal global state management        |
+| **Recharts** | Charting library for data viz         |
+| **wagmi + viem** | Wallet integration (EVM-compatible) |
+| **CoinGecko API** | Real-time asset price data       |
+
+---
+
+## 🚀 Getting Started
+
+```bash
+git clone https://github.com/your-username/crypto-tracker.git
+cd crypto-tracker
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+## 🧠 Design Considerations
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    "react-x": reactX,
-    "react-dom": reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs["recommended-typescript"].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-});
-```
+This project was built with scalability and clarity in mind.
+It demonstrates:
+
+- Clean, modular React architecture with reusable components
+
+- State decoupling via Zustand for better maintainability
+
+- A clear user experience focused on responsiveness and feedback
+
+- Integration with real-world APIs and wallet tooling to mirror production use cases
+
