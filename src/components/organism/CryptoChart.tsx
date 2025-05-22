@@ -108,39 +108,39 @@ export const CryptoChart = () => {
   return (
     <div className="w-full p-2 md:p-4">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-[0.5rem] md:gap-0 mb-[1rem]">
-        <h3 className="text-base my-[0.5rem] md:text-lg font-semibold">Price Chart ({timeRange} days)</h3>
-        <div className="flex flex-wrap gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => useCryptoStore.getState().setTimeRange("7")}
-            className={timeRange === "7" ? "bg-blue-500 text-white" : ""}
-          >
-            1W
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => useCryptoStore.getState().setTimeRange("30")}
-            className={timeRange === "30" ? "bg-blue-500 text-white" : ""}
-          >
-            1M
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => useCryptoStore.getState().setTimeRange("365")}
-            className={timeRange === "365" ? "bg-blue-500 text-white" : ""}
-          >
-            1Y
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleRefresh}
-            className="ml-2"
-          >
-            <RefreshCw className="h-4 w-4" />
+        <h3 className="text-base my-[0.5rem] md:text-lg font-semibold">
+          Price Chart ({timeRange} days)
+        </h3>
+        <div className="w-full flex flex-row justify-between items-center flex-wrap gap-2">
+          <div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => useCryptoStore.getState().setTimeRange('7')}
+              className={timeRange === '7' ? '' : 'bg-[gray]'}
+            >
+              1W
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => useCryptoStore.getState().setTimeRange('30')}
+              className={timeRange === '30' ? '' : 'bg-[gray]'}
+            >
+              1M
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => useCryptoStore.getState().setTimeRange('365')}
+              className={timeRange === '365' ? '' : 'bg-[gray]'}
+            >
+              1Y
+            </Button>
+          </div>
+
+          <Button variant="ghost" size="sm" onClick={handleRefresh} className="ml-2">
+            <RefreshCw className="h-[1rem] w-[1rem]" /> Refresh
           </Button>
         </div>
       </div>

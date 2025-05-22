@@ -26,20 +26,36 @@ const COMMON_TOKENS = [
 ];
 
 const UserAssets = () => {
-  const { address, isConnected } = useAccount();
-  const { data: nativeBalance } = useBalance({
+  const { address, isConnected, isConnecting } = useAccount();
+  const {
+    data: nativeBalance,
+    isLoading: isNativeBalanceLoading,
+    isError: isNativeBalanceError,
+  } = useBalance({
     address,
   });
   const { selectedAssets, setSelectedAssets } = useCryptoStore();
 
   // Get token balances
   const tokenBalances = COMMON_TOKENS.map((token) => {
-    const { data: balance } = useBalance({
+    const {
+      data: balance,
+      isLoading,
+      isError,
+    } = useBalance({
       address,
       token: token.address as `0x${string}`,
     });
-    return { ...token, balance };
+    return { ...token, balance, isLoading, isError };
   });
+
+  if (isConnecting) {
+    return (
+      <div className="flex flex-col items-start pt-1 pb-3 px-4 w-full text-[#94adc7] font-['Inter'] text-sm leading-[1.3125rem]">
+        Loading...
+      </div>
+    );
+  }
 
   if (!isConnected) {
     return (
@@ -63,6 +79,8 @@ const UserAssets = () => {
       name: 'Ethereum',
       symbol: 'ETH',
       balance: nativeBalance ? formatEther(nativeBalance.value) : '0',
+      isLoading: isNativeBalanceLoading,
+      isError: isNativeBalanceError,
     },
     ...tokenBalances
       .filter((token) => token.balance && Number(token.balance.value) > 0)
@@ -71,6 +89,8 @@ const UserAssets = () => {
         name: token.name.charAt(0).toUpperCase() + token.name.slice(1),
         symbol: token.symbol,
         balance: token.balance ? formatEther(token.balance.value) : '0',
+        isLoading: token.isLoading,
+        isError: token.isError,
       })),
   ];
 
@@ -96,7 +116,13 @@ const UserAssets = () => {
           >
             <div className="flex items-center gap-[0.5rem]">
               <span className="font-medium">{asset.symbol}</span>
-              <span className="text-sm opacity-75">({Number(asset.balance).toFixed(4)})</span>
+              {asset.isLoading ? (
+                <span className="text-sm opacity-75">Loading...</span>
+              ) : asset.isError ? (
+                <span className="text-sm opacity-75">Error fetching balance</span>
+              ) : (
+                <span className="text-sm opacity-75">({Number(asset.balance).toFixed(4)})</span>
+              )}
             </div>
           </Pill>
         ))}

@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "node", // this is a must for Jest compatibility
+    "verbatimModuleSyntax": false,
+    "allowImportingTsExtensions": true
+  },
+  "include": ["src/**/*.test.ts", "src/**/*.test.tsx"]
+}

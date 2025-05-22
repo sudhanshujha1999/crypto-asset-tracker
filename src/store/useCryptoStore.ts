@@ -18,11 +18,11 @@ export interface CryptoData {
 
 interface State {
   selectedAssets: string[];
-  data: Record<string, Record<string, CryptoData>>; // assetId -> timeRange -> data
-  assetDetails: Record<string, CryptoPrice>; // assetId -> basic asset details
+  data: Record<string, Record<string, CryptoData>>;
+  assetDetails: Record<string, CryptoPrice>;
   timeRange: "7" | "30" | "365";
   loading: boolean;
-  lastAccessed: Record<string, number>; // assetId -> timestamp
+  lastAccessed: Record<string, number>;
   setSelectedAssets: (assets: string[]) => void;
   setAssetData: (assetId: string, timeRange: string, data: CryptoData) => void;
   setAssetDetails: (assetId: string, details: CryptoPrice) => void;

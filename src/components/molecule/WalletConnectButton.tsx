@@ -28,7 +28,6 @@ export function WalletConnectButton() {
       enqueueSnackbar(cleanErrorMessage, { variant: 'error' });
     }
   }, [error, enqueueSnackbar]);
-
   useEffect(() => {
     // Only show success toast when connection is established
     // This will prevent duplicate toasts on page refresh
@@ -48,7 +47,7 @@ export function WalletConnectButton() {
     </div>
   ) : (
     <div className="flex flex-col gap-1">
-      <Button variant="outline" size='lg' onClick={handleConnect} disabled={isPending}>
+      <Button variant="outline" size="lg" onClick={handleConnect} disabled={isPending}>
         {isPending ? 'Connecting...' : 'Connect Wallet'}
       </Button>
     </div>

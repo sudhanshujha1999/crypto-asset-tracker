@@ -10,10 +10,10 @@ export interface CryptoPrice {
 }
 
 export interface CryptoChartData {
-  prices: [number, number][]; // [timestamp, price]
-  market_caps: [number, number][]; // [timestamp, market_cap]
-  total_volumes: [number, number][]; // [timestamp, volume]
-  lastFetched: number
+  prices: [number, number][];
+  market_caps: [number, number][];
+  total_volumes: [number, number][];
+  lastFetched: number;
 }
 
 export interface SearchResult {

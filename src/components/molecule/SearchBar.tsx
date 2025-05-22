@@ -24,7 +24,7 @@ export default function SearchBar() {
       setIsLoading(true);
       try {
         const results = await searchCrypto(query);
-        setSearchResults(results);
+        setSearchResults(Array.isArray(results) ? results : []);
       } catch (error) {
         console.error('Error searching crypto:', error);
         if (error instanceof Error) {
@@ -60,7 +60,7 @@ export default function SearchBar() {
   }, []);
 
   const toggleValue = (value: string) => {
-    const asset = searchResults.find(a => a.id === value);
+    const asset = searchResults.find((a) => a.id === value);
     if (asset) {
       setAssetDetails(value, {
         id: asset.id,
@@ -68,7 +68,7 @@ export default function SearchBar() {
         symbol: asset.symbol,
         current_price: 0, // These values will be updated when price data is fetched
         price_change_percentage_24h: 0,
-        market_cap: 0
+        market_cap: 0,
       });
     }
 
@@ -78,8 +78,8 @@ export default function SearchBar() {
     setSelectedAssets(newSelected);
   };
 
-  const isAllSelected = searchResults.length > 0 && 
-    searchResults.every((a) => selectedAssets.includes(a.id));
+  const isAllSelected =
+    searchResults?.length > 0 && searchResults.every((a) => selectedAssets.includes(a.id));
 
   const handleSelectAll = () => {
     if (isAllSelected) {
@@ -88,14 +88,14 @@ export default function SearchBar() {
       const newSelected = searchResults.map((a) => a.id);
       setSelectedAssets(newSelected);
       // Store details for all selected assets
-      searchResults.forEach(asset => {
+      searchResults.forEach((asset) => {
         setAssetDetails(asset.id, {
           id: asset.id,
           name: asset.name,
           symbol: asset.symbol,
           current_price: 0,
           price_change_percentage_24h: 0,
-          market_cap: 0
+          market_cap: 0,
         });
       });
     }
@@ -117,14 +117,21 @@ export default function SearchBar() {
               >
                 <div className="flex flex-wrap flex-col items-start self-stretch text-white font-['Inter'] text-sm font-medium leading-[1.3125rem]">
                   <div className="bg-gray-800 text-white gap-[0.5rem] py-0.5 rounded-full flex items-center gap-1">
-                    <div className='whitespace-nowrap'>{searchResults.find((a) => a.id === val)?.name || val.charAt(0).toUpperCase() + val.slice(1)}</div>
-                    <X
-                      className="w-[1rem] h-[1rem] cursor-pointer"
+                    <div className="whitespace-nowrap">
+                      {searchResults.find((a) => a.id === val)?.name ||
+                        val.charAt(0).toUpperCase() + val.slice(1)}
+                    </div>
+                    <button
+                      type="button"
+                      aria-label={`Remove ${searchResults.find((a) => a.id === val)?.name || val}`}
+                      className="w-[1rem] h-[1rem] cursor-pointer bg-transparent border-none p-[0rem] m-[0rem"
                       onClick={(e) => {
                         e.stopPropagation();
                         toggleValue(val);
                       }}
-                    />
+                    >
+                      <X className="w-[1rem] h-[1rem] stroke-[white] " />
+                    </button>
                   </div>
                 </div>
               </div>
@@ -146,13 +153,13 @@ export default function SearchBar() {
 
       {/* Dropdown list */}
       {open && (
-        <div 
+        <div
           className="absolute box-border flex flex-col z-10 w-full max-h-[32rem] overflow-auto bg-[#1d1e20] border border-t-0 border-gray-700 rounded-[0.25rem] py-[1rem] px-[1rem] space-y-1 text-sm gap-[1rem]"
           onClick={(e) => e.stopPropagation()}
         >
           {isLoading ? (
             <div className="text-center text-gray-400">Loading...</div>
-          ) : searchResults.length > 0 ? (
+          ) : Array.isArray(searchResults) && searchResults.length > 0 ? (
             <>
               <div
                 className="flex items-center gap-[0.5rem] px-[0.5rem] py-[0.25rem] hover:bg-gray-800 rounded cursor-pointer"
@@ -173,7 +180,9 @@ export default function SearchBar() {
                   <div className="w-[1rem] h-[1rem] flex items-center justify-center border border-gray-600 rounded-[0.25rem]">
                     {selectedAssets.includes(asset.id) && <Check className="w-3 h-3 text-white" />}
                   </div>
-                  <span>{asset.name} ({asset.symbol.toUpperCase()})</span>
+                  <span>
+                    {asset.name} ({asset.symbol.toUpperCase()})
+                  </span>
                 </div>
               ))}
             </>
