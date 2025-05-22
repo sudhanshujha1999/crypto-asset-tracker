@@ -1,6 +1,5 @@
 import { useAccount, useBalance } from 'wagmi';
 import { useCryptoStore } from '@/store/useCryptoStore';
-import { useSnackbar } from 'notistack';
 import { formatEther } from 'viem';
 import Pill from '../atom/Pill';
 
@@ -10,20 +9,20 @@ const COMMON_TOKENS = [
     address: '0xdAC17F958D2ee523a2206206994597C13D831ec7', // USDT
     symbol: 'USDT',
     name: 'Tether USD',
-    decimals: 6
+    decimals: 6,
   },
   {
     address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', // USDC
     symbol: 'USDC',
     name: 'USD Coin',
-    decimals: 6
+    decimals: 6,
   },
   {
     address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', // DAI
     symbol: 'DAI',
     name: 'Dai Stablecoin',
-    decimals: 18
-  }
+    decimals: 18,
+  },
 ];
 
 const UserAssets = () => {
@@ -32,17 +31,15 @@ const UserAssets = () => {
     address,
   });
   const { selectedAssets, setSelectedAssets } = useCryptoStore();
-  const { enqueueSnackbar } = useSnackbar();
 
   // Get token balances
-  const tokenBalances = COMMON_TOKENS.map(token => {
+  const tokenBalances = COMMON_TOKENS.map((token) => {
     const { data: balance } = useBalance({
       address,
       token: token.address as `0x${string}`,
     });
     return { ...token, balance };
   });
-
 
   if (!isConnected) {
     return (
@@ -54,7 +51,7 @@ const UserAssets = () => {
 
   const handleAssetClick = (assetId: string) => {
     if (selectedAssets.includes(assetId)) {
-      setSelectedAssets(selectedAssets.filter(id => id !== assetId));
+      setSelectedAssets(selectedAssets.filter((id) => id !== assetId));
     } else {
       setSelectedAssets([...selectedAssets, assetId]);
     }
@@ -65,16 +62,16 @@ const UserAssets = () => {
       id: 'ethereum',
       name: 'Ethereum',
       symbol: 'ETH',
-      balance: nativeBalance ? formatEther(nativeBalance.value) : '0'
+      balance: nativeBalance ? formatEther(nativeBalance.value) : '0',
     },
     ...tokenBalances
-      .filter(token => token.balance && Number(token.balance.value) > 0)
-      .map(token => ({
+      .filter((token) => token.balance && Number(token.balance.value) > 0)
+      .map((token) => ({
         id: token.symbol.toLowerCase(),
         name: token.name.charAt(0).toUpperCase() + token.name.slice(1),
         symbol: token.symbol,
-        balance: token.balance ? formatEther(token.balance.value) : '0'
-      }))
+        balance: token.balance ? formatEther(token.balance.value) : '0',
+      })),
   ];
 
   if (assets.length === 0) {

@@ -1,5 +1,3 @@
-import { useSnackbar } from 'notistack';
-
 const COINGECKO_API_BASE = 'https://api.coingecko.com/api/v3'
 
 export interface CryptoPrice {
